@@ -1,0 +1,7 @@
+version: "3.8"
+services:
+  youtubot:
+    build: .
+    ports:
+      - 7029:7029
+
