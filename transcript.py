@@ -1,11 +1,11 @@
 import os
 import openai
-import keys
 
-with open('Prompt_amiass.txt', 'r') as f:
+with open('Prompt_amiass.txt', 'r', encoding = "UTF-8") as f:
     prompt = f.read()
 
-openai.api_key = keys.OPENAI_API_KEY
+
+openai.api_key = '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'
 
 def get_transript(topic):
 
@@ -23,6 +23,16 @@ def get_transript(topic):
         )
     return(response.choices[0].text)
 
-if __name__ == "__main__":
+def filewriter(filename, content):
+    file = open(filename, "w")
+    file.write(content)
+    file.close()
+    return print("txt written")
+    
+def main():
     topic = input("input topic: ")
-    print(get_transript(topic))
+    transcript = get_transript(topic)
+    filewriter("redditAIDAscript.txt", transcript)
+    
+
+#get the output's last sentence/name of output and throw it into the movie_render_AI.py
