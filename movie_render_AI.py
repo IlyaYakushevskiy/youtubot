@@ -5,23 +5,36 @@ import os
 from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_subclip
 
 
+def clean_string(thelist):#cleans the output from \n separators, and converts the list into the string
+    for el in thelist:
+        if el == '\n':
+            thelist.remove(el)
+    tempString = ''
+    for x in thelist:
+        tempString += x
+    return tempString
 
-video_source = "C:/Users/mrass/Downloads/minecraft_tt.mp4"
-audio_source = "C:/Users/mrass/Downloads/narration.mp3"
-subtitle_source = "C:/Users/mrass/Downloads/subtitles.srt"
-img_source = "C:/Users/mrass/Downloads/reddit_title.jpg"
-titles = "AIDA for bringing my daughter to the footbal field?" #testline
-#film_source = ""
-vid_name = "final.mp4"
+def get_title_format_string(): #getting the title(AIDA for ...) and formatting the string, so that it can be used
+    file = open("redditAIDAscript.txt", "r")
+    sumstring = file.readlines()
+    post = clean_string(sumstring) #constructing the string from the list of output
+    title_index = post.find("Am I the asshole") # finding thee index of AIDA
+    title = post[title_index:] 
+    file.close()
+    return title
 
+def video_construct(img_source, video_source, audio_source, subtitle_source, vid_name, quality):
 
-def video_construct(img_source, video_source, audio_source, subtitle_source, vid_name):
-
-    
     clip = VideoFileClip(video_source)
-    myvideo = clip.resize(height=1920, width=1080)
+    if quality == "FHD":
+        myvideo = clip.resize(height=1920, width=1080)
+    if quality == "HD":
+        myvideo = clip.resize(height=1280, width=720)
+    else:
+        myvideo = clip.resize(height=854, width=480)
     audio = AudioFileClip(audio_source)
-    
+    vid_name = "./outputs/" + vid_name
+
     
     sub_text = lambda txt : TextClip(txt, font='Georgia-Regular', fontsize=72, color='white', align="center")
     
@@ -36,16 +49,17 @@ def video_construct(img_source, video_source, audio_source, subtitle_source, vid
            .set_start(0) #which second to start displaying image
            .set_duration(3) #how long to display image
            .set_position(("center", "center")))
+    titles = get_title_format_string()
     title = TextClip(titles, font='Georgia-Regular', size=(930, 0), color='white').set_start(0).set_duration(3).set_position(("center", "center"))
     
     final = CompositeVideoClip([myvideo, subtitles, reddit_post, title]) #Compiles all the tracks into one list. The furthest element on the list, is on the foreground.
     final = final.set_audio(audio)
-    final.write_videofile(vid_name, fps=myvideo.fps) #Starts the render
+    final.write_videofile(vid_name, fps=myvideo.fps, threads=2, codec="libx264") #Starts the render
     final.close()
-    clean_up(audio_source, subtitle_source)
-    return
+    #clean_up(audio_source, subtitle_source)
+    return print("Video written!")
 
-def clean_up(audio_source, subtitle_source):
+def clean_up(audio_source, subtitle_source): #delete used tts audio and subtitles
     source_list = [audio_source, subtitle_source]
     file_path = source_list
     for x in file_path:
@@ -56,7 +70,7 @@ def clean_up(audio_source, subtitle_source):
             print("File does not exist")
     return
 
-def video_split(film_source):
+def video_split(film_source): 
     film = VideoFileClip(film_source) #Load the File
     duration = film.duration #Get duration in seconds
     coefficient = duration / 59 #Calculate into how many clips vid can be chopped
@@ -69,6 +83,3 @@ def video_split(film_source):
         print(abra) #Nevermind this, it just looks better this way xD
         n.write_videofile(abra)
     return
-
-#video_construct(img_source, video_source, audio_source, subtitle_source, vid_name)
-video_split("C:/Users/mrass/Downloads/Fulcrum.mp4")

@@ -27,6 +27,7 @@ def Video_uploader(Vid_source, Vid_name, Vid_descr):
     video.set_tags(["this", "tag"])
     video.set_category("gaming")
     video.set_default_language("en-US")
+    video.set_made_for_kids(False)
     
     print("snipper set")
     
