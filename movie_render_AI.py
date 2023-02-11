@@ -27,11 +27,11 @@ def video_construct(img_source, video_source, audio_source, subtitle_source, vid
 
     clip = VideoFileClip(video_source)
     if quality == "FHD":
-        myvideo = clip.resize(height=1920, width=1080)
+        myvideo = clip.resize(height=1920, width=1080) #ya dolbayob
     if quality == "HD":
-        myvideo = clip.resize(height=1280, width=720)
+        myvideo = clip.resize(height=1920, width=1080)
     else:
-        myvideo = clip.resize(height=854, width=480)
+        myvideo = clip.resize(height=1920, width=1080)
     audio = AudioFileClip(audio_source)
     vid_name = "./outputs/" + vid_name
 
@@ -83,3 +83,6 @@ def video_split(film_source):
         print(abra) #Nevermind this, it just looks better this way xD
         n.write_videofile(abra)
     return
+
+if __name__ == "__main__":
+    print(get_title_format_string()[:-1])

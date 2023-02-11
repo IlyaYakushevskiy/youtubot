@@ -29,10 +29,11 @@ def filewriter(filename, content):
     file.close()
     return print("txt written")
     
-def main():
-    topic = input("input topic: ")
-    transcript = get_transript(topic)
-    filewriter("redditAIDAscript.txt", transcript)
+
     
 
 #get the output's last sentence/name of output and throw it into the movie_render_AI.py
+
+if __name__ == "__main__":
+    inp = input("input topic: ")
+    print(get_transript(inp))
