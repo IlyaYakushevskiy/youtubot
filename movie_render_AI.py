@@ -18,22 +18,19 @@ def get_title_format_string(): #getting the title(AIDA for ...) and formatting t
     file = open("redditAIDAscript.txt", "r")
     sumstring = file.readlines()
     post = clean_string(sumstring) #constructing the string from the list of output
-    title_index = post.find("Am I the asshole") # finding thee index of AIDA
-    title = post[title_index:] 
+    title_name = post[:post.find("?")+2]
     file.close()
-    return title
+    return title_name
 
-def video_construct(img_source, video_source, audio_source, subtitle_source, vid_name, quality):
+def video_construct(img_source, video_source, audio_source, subtitle_source, title_name):
 
     clip = VideoFileClip(video_source)
-    if quality == "FHD":
-        myvideo = clip.resize(height=1920, width=1080) #ya dolbayob
-    if quality == "HD":
-        myvideo = clip.resize(height=1920, width=1080)
-    else:
-        myvideo = clip.resize(height=1920, width=1080)
+    myvideo = clip.resize(height=1920, width=1080) #ya dolbayob. Solgasny, i uznali
+
     audio = AudioFileClip(audio_source)
-    vid_name = "./outputs/" + vid_name
+    title_with_codec = title_name[:-1] + ".mp4"
+ 
+    vid_name = "./outputs/" + title_with_codec.replace(" ", "_") #Reaplces spaces with _
 
     
     sub_text = lambda txt : TextClip(txt, font='Georgia-Regular', fontsize=72, color='white', align="center")
