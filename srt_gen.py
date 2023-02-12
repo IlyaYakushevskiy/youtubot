@@ -7,12 +7,23 @@ from mutagen.mp3 import MP3
 
 audio = MP3("sources/output.mp3")
 
+def split_text_into_subtitles(text, max_length):
+    chunks = []
+    chunk = ""
+    words = text.split(" ")
+    for word in words:
+        if len(chunk) + len(word) + 1 > max_length:
+            chunks.append(chunk)
+            chunk = ""
+        chunk += word + " "
+    chunks.append(chunk)
+    return chunks
+
 def make_srt(text):
     # Split the text into chunks
-    chunks = text.split(".")
+    chunks = split_text_into_subtitles(text, 26)
     
-
-    tts_speed = audio.info.length/len(text) # time pro 1 char tts 
+    tts_speed = (round(audio.info.length)+1)/len(text) # time pro 1 char tts 
     # Create a list of subtitles
     subtitles = []
     chr_prev = 0
@@ -21,9 +32,9 @@ def make_srt(text):
         sub = pysrt.SubRipItem()
         sub.index = i + 1
         sub.text = chunk
-        sub.start.seconds = chr_prev * tts_speed * 100
-        sub.end.seconds = (chr_prev + len(chunk[i])) * tts_speed * 100
-        chr_prev += len(chunk[i])
+        sub.start.seconds = chr_prev * tts_speed * 10
+        sub.end.seconds = (chr_prev + len(sub.text)) * tts_speed * 10
+        chr_prev += len(sub.text)
         # Append the SubRipItem to the list of subtitles
         subtitles.append(sub)
 

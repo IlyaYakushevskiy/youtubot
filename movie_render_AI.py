@@ -3,6 +3,7 @@ from moviepy.video.io.VideoFileClip import VideoFileClip
 from moviepy.editor import *
 import os
 from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_subclip
+from mutagen.mp3 import MP3
 
 
 def clean_string(thelist):#cleans the output from \n separators, and converts the list into the string
@@ -24,16 +25,23 @@ def get_title_format_string(): #getting the title(AIDA for ...) and formatting t
 
 def video_construct(img_source, video_source, audio_source, subtitle_source, title_name):
 
+    audio = AudioFileClip(audio_source)
+    audio_len = MP3(audio_source)
+    audio_len_secs = int(round(audio_len.info.length) + 1)
     clip = VideoFileClip(video_source)
     myvideo = clip.resize(height=1920, width=1080) #ya dolbayob. Solgasny, i uznali
 
-    audio = AudioFileClip(audio_source)
+
+    
+
+
     title_with_codec = title_name[:-1] + ".mp4"
- 
+
+    #global vid_name
     vid_name = "./outputs/" + title_with_codec.replace(" ", "_") #Reaplces spaces with _
 
     
-    sub_text = lambda txt : TextClip(txt, font='Georgia-Regular', fontsize=72, color='white', align="center")
+    sub_text = lambda txt : TextClip(txt, font='Georgia-Regular', fontsize=72, color='white', align="center", bg_color="black")
     
     subtitles = SubtitlesClip(subtitle_source, sub_text)
     subtitles = subtitles.set_pos("center")
@@ -49,7 +57,7 @@ def video_construct(img_source, video_source, audio_source, subtitle_source, tit
     titles = get_title_format_string()
     title = TextClip(titles, font='Georgia-Regular', size=(930, 0), color='white').set_start(0).set_duration(3).set_position(("center", "center"))
     
-    final = CompositeVideoClip([myvideo, subtitles, reddit_post, title]) #Compiles all the tracks into one list. The furthest element on the list, is on the foreground.
+    final = CompositeVideoClip([myvideo, subtitles, reddit_post, title]).set_duration(10) #Compiles all the tracks into one list. The furthest element on the list, is on the foreground.
     final = final.set_audio(audio)
     final.write_videofile(vid_name, fps=myvideo.fps, threads=2, codec="libx264") #Starts the render
     final.close()

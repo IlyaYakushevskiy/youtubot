@@ -1,8 +1,10 @@
 import transcript
 import movie_render_AI
-#from gctts import tts_record
-#from srt_gen import make_srt
+from gctts import tts_record
+from srt_gen import make_srt
 import logging 
+import yt_upload
+
 
 
 logging.basicConfig(filename='log.txt', filemode='w', format='%(name)s - %(levelname)s - %(text)s')
@@ -27,13 +29,13 @@ transcript.filewriter("redditAIDAscript.txt", text)
 
 
 
-
-#tts_record(text)
+tts_record(text)
 #make_srt(text)
 
 
 #print(title_with_codec)
-#movie_render_AI.video_construct(img_source, video_source, audio_source, subtitle_source, title_name)
+movie_render_AI.video_construct(img_source, video_source, audio_source, subtitle_source, title_name)
+#yt_upload.video_uploader(vid_name, )
 #movie_render_AI.video_split("D:/thrash/vid_cut.mp4")
 #vid_upload()
 
