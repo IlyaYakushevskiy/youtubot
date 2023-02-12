@@ -21,7 +21,7 @@ def split_text_into_subtitles(text, max_length):
 
 def make_srt(text):
     # Split the text into chunks
-    chunks = split_text_into_subtitles(text, 26)
+    chunks = split_text_into_subtitles(text, 26)   
     
     tts_speed = (round(audio.info.length)+1)/len(text) # time pro 1 char tts 
     # Create a list of subtitles
@@ -32,8 +32,8 @@ def make_srt(text):
         sub = pysrt.SubRipItem()
         sub.index = i + 1
         sub.text = chunk
-        sub.start.seconds = chr_prev * tts_speed * 10
-        sub.end.seconds = (chr_prev + len(sub.text)) * tts_speed * 10
+        sub.start.seconds = chr_prev * tts_speed 
+        sub.end.seconds = (chr_prev + len(sub.text)) * tts_speed 
         chr_prev += len(sub.text)
         # Append the SubRipItem to the list of subtitles
         subtitles.append(sub)
@@ -45,7 +45,7 @@ def make_srt(text):
     subs.save("./sources/subtitles.srt", encoding='utf-8')
 
 if __name__ == "__main__": 
-    text = "Am I the Asshole for watching naked videos of my girlfriend without her knowing? Post: My girlfriend and I have been together for a few months now. She's really shy and not very comfortable around sex. She told me that she doesn't want to do anything sexual until marriage, but she's okay with me coming to her house and cuddling, watching a movie or two, etc. :One day, when I was going through her computer, I stumbled across a folder with a bunch of naked videos of her, taken with her phone. It was hidden in a folder called Videos, and since she didn't tell me about it, I assumed it was just regular videos. :I watched one just to see what kind of videos she was making, and it ended up being a video of her totally naked, posing and taking pictures of herself. I was immediately embarrassed and deleted the videos as soon as I realized she was naked. I didn't tell her what I saw and I don't plan to. Am I the Asshole here?"
+    text = "Am I the Asshole for playing with my child's toys that he doesn't play with anymore?  My six year old son has an obsession with collecting toys, but he cannot keep them organized and they end up in a huge pile. I have asked him to clean up his toys many times but he doesn't, and I am not going to force him to do so.:Sometimes I find myself playing with his toys, mainly the ones that are hidden in the pile because he doesn't play with them anymore. I find it fun and it helps pass the time when I'm bored. :He sees me playing with his toys and gets mad, saying that he wanted to play with those toys and I should leave them alone. :I tell him that he hasn't played with the toys in a long time and he should organize his toys if he wanted to play with them. :Am I the asshole for playing with my son's toys?"
     print(len(text))
     print(audio.info.length)
     tts_speed = audio.info.length/len(text)

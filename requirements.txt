@@ -2,3 +2,4 @@ openai==0.25.0
 google-cloud-texttospeech
 mutagen
 pysrt
+simple_youtube_api

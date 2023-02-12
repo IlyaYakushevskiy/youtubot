@@ -1,7 +1,7 @@
 import os
 import openai
 
-with open('Prompt_amiass.txt', 'r', encoding = "UTF-8") as f:
+with open('./prompts/Prompt_amiass.txt', 'r', encoding = "UTF-8") as f:
     prompt = f.read()
 
 
