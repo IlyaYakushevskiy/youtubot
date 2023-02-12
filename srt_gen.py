@@ -31,7 +31,7 @@ def make_srt(text):
         # Create a new SubRipItem
         sub = pysrt.SubRipItem()
         sub.index = i + 1
-        sub.text = chunk
+        sub.text = chunks[i-1] + "\n" + chunks[i]
         sub.start.seconds = chr_prev * tts_speed 
         sub.end.seconds = (chr_prev + len(sub.text)) * tts_speed 
         chr_prev += len(sub.text)
