@@ -23,7 +23,7 @@ def make_srt(text):
     # Split the text into chunks
     chunks = split_text_into_subtitles(text, 26)   
     
-    tts_speed = (round(audio.info.length)+1)/len(text) # time pro 1 char tts 
+    tts_speed = (audio.info.length)/len(text) # time pro 1 char tts 
     # Create a list of subtitles
     subtitles = []
     chr_prev = 0
@@ -31,7 +31,7 @@ def make_srt(text):
         # Create a new SubRipItem
         sub = pysrt.SubRipItem()
         sub.index = i + 1
-        sub.text = chunks[i-1] + "\n" + chunks[i]
+        sub.text = chunks[i]
         sub.start.seconds = chr_prev * tts_speed 
         sub.end.seconds = (chr_prev + len(sub.text)) * tts_speed 
         chr_prev += len(sub.text)
@@ -51,5 +51,3 @@ if __name__ == "__main__":
     tts_speed = audio.info.length/len(text)
     print("speed is ", tts_speed)
     make_srt(text)
-    
-    
