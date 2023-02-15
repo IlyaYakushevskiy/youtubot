@@ -5,11 +5,15 @@ Note: ssml must be well-formed according to:
     https://www.w3.org/TR/speech-synthesis/
 """
 from google.cloud import texttospeech
+from google.oauth2 import service_account
 
 
 
 def tts_record(text): 
+    #credentials_path = r'D:/proj_AI/youtubotyoutubot-377214-5259348d801c.json'
+
     # Instantiates a client
+    #credentials = service_account.Credentials.from_service_account_file("youtubot-377214-5259348d801c.json")
     client = texttospeech.TextToSpeechClient()
 
     prompt_temp = text

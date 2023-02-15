@@ -9,7 +9,7 @@ client_secrets = "client_secrets.json"
 
 #movie_render_AI.
 
-def video_uploader(vid_source, vid_name, vid_descr):
+def yt_upload(vid_source, vid_name, vid_descr):
     # loggin into the channel
     channel = Channel()
     channel.login(client_secrets, "credentials.storage")
@@ -25,7 +25,7 @@ def video_uploader(vid_source, vid_name, vid_descr):
     video.set_title(vid_name)
     video.set_description(vid_descr)
     video.set_tags(["this", "tag"])
-    video.set_category("enterntainment")
+    video.set_category("entertainment")
     video.set_default_language("en-US")
     video.set_made_for_kids(False)
     

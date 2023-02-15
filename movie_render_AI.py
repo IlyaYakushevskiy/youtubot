@@ -5,6 +5,10 @@ import os
 from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_subclip
 from mutagen.mp3 import MP3
 
+def output_name_modifier(title_name):
+    title_with_codec = title_name[:-10] + ".mp4"
+    vid_name = "./outputs/" + title_with_codec.replace(" ", "_")
+    return vid_name
 
 def clean_string(thelist):#cleans the output from \n separators, and converts the list into the string
     for el in thelist:
@@ -31,35 +35,27 @@ def video_construct(img_source, video_source, audio_source, subtitle_source, tit
     clip = VideoFileClip(video_source)
     myvideo = clip.resize(height=1920, width=1080) #ya dolbayob. Solgasny, i uznali
 
-
     
 
-
-    title_with_codec = title_name[:-1] + ".mp4"
-
     #global vid_name
-    vid_name = "./outputs/" + title_with_codec.replace(" ", "_") #Reaplces spaces with _
-
+     #Reaplces spaces with _
+    #vid_name = "./outputs/" + "crazy bimbo.mp4"
     
     sub_text = lambda txt : TextClip(txt, font='Georgia-Regular', fontsize=72, color='white', align="center", bg_color="black")
     
     subtitles = SubtitlesClip(subtitle_source, sub_text)
     subtitles = subtitles.set_pos("center")
-    #subtitles = subtitles.set_pos((myvideo.w/2 - 70, myvideo.h/2 - 110))
-    #Black dynamic background could be added.
-    #sub_text = subtitles.set_pos((myvideo.w/2, myvideo.h/2))
-    #sub_rect = ColorClip(size=(50, 100), color=(0,0,0), duration=subtitles.duration)
-    #sub_rect = sub_rect.set_pos(lambda t: (myvideo.w/2-2, myvideo.h/2-2))
+
     reddit_post = (ImageClip(img_source)
            .set_start(0) #which second to start displaying image
            .set_duration(3) #how long to display image
            .set_position(("center", "center")))
-    titles = get_title_format_string()
-    title = TextClip(titles, font='Georgia-Regular', size=(930, 0), color='white').set_start(0).set_duration(3).set_position(("center", "center"))
+
+    title = TextClip(title_name, font='Georgia-Regular', size=(930, 0), color='white').set_start(0).set_duration(3).set_position(("center", "center"))
     
     final = CompositeVideoClip([myvideo, subtitles, reddit_post, title]).set_duration(audio_len_secs) #Compiles all the tracks into one list. The furthest element on the list, is on the foreground.
     final = final.set_audio(audio)
-    final.write_videofile(vid_name, fps=myvideo.fps, threads=2, codec="libx264") #Starts the render
+    final.write_videofile(output_name_modifier(title_name), fps=myvideo.fps, threads=2, codec="libx264") #Starts the render
     final.close()
     #clean_up(audio_source, subtitle_source)
     return print("Video written!")
