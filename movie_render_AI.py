@@ -7,6 +7,7 @@ from mutagen.mp3 import MP3
 
 def output_name_modifier(title_name):
     title_with_codec = title_name[:-10] + ".mp4"
+    title_with_codec.replace('/', "_")
     vid_name = "./outputs/" + title_with_codec.replace(" ", "_")
     return vid_name
 

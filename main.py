@@ -5,11 +5,12 @@ from gctts import tts_record
 from srt_gen import make_srt
 import logging 
 from yt_upload import yt_upload
+import time
 
 
 
 #List for video topics
-wordlist = ["Cancelling", "Karening", "Pronouning", "BLMing", "Trumping", "LGBTQ+ing", "Vaccinating", "Aborting", "Fat-shaming", "Appropriating"]
+wordlist = ["pronouning", "BLMing", "Trumping", "LGBTQ+ing", "vaccinating", "aborting", "fat-shaming", "appropriating", "consuming","levitating","v"]
 
 
 
@@ -59,14 +60,16 @@ def main(i):
     #print(title_with_codec)
     movie_render_AI.video_construct(img_source, video_source, audio_source, subtitle_source, title_name)
     vid_descr = str("#Shorts"+"\n"+"#Reddit"+"\n"+"#Stories"+"\n"+"One of the best stories from reddit!")
-    #yt_upload.video_uploader(vid_name, )
+   
+   
     #movie_render_AI.video_split("D:/thrash/vid_cut.mp4")
-    yt_upload(output_name_modifier(title_name), title_name, vid_descr)#Upload to YT
+    #yt_upload(output_name_modifier(title_name), title_name, vid_descr)#Upload to YT
 
     return print(title_name, "SUCCESS")
 
-main(wordlist[1])
-#for i in wordlist():
- #   main(i)
+#main(wordlist[1])
+for i in wordlist:
+    main(i)
+    #time.sleep(1800)#Wait 30 min before next cycle
 
 

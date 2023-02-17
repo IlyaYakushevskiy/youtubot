@@ -34,7 +34,7 @@ def yt_upload(vid_source, vid_name, vid_descr):
     # setting status
     video.set_embeddable(True)
     video.set_license("creativeCommon")
-    video.set_privacy_status("private")
+    video.set_privacy_status("public")
     video.set_public_stats_viewable(True)
     
     print("status set")
