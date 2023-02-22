@@ -52,11 +52,11 @@ def video_construct(img_source, video_source, audio_source, subtitle_source, tit
            .set_duration(3) #how long to display image
            .set_position(("center", "center")))
 
-    title = TextClip(title_name, font='Georgia-Regular', size=(930, 0), color='white').set_start(0).set_duration(3).set_position(("center", "center"))
+    title = TextClip(title_name+"?", font='Georgia-Regular', size=(930, 0), color='white').set_start(0).set_duration(3).set_position(("center", "center"))
     
     final = CompositeVideoClip([myvideo, subtitles, reddit_post, title]).set_duration(audio_len_secs) #Compiles all the tracks into one list. The furthest element on the list, is on the foreground.
     final = final.set_audio(audio)
-    final.write_videofile(output_name_modifier(title_name), fps=myvideo.fps, threads=2, codec="libx264") #Starts the render
+    final.write_videofile(output_name_modifier(title_name), fps=myvideo.fps, threads=4, codec="libx264") #Starts the render
     final.close()
     #clean_up(audio_source, subtitle_source)
     return print("Video written!")
