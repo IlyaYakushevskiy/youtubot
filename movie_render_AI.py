@@ -4,6 +4,7 @@ from moviepy.editor import *
 import os
 from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_subclip
 from mutagen.mp3 import MP3
+import random
 
 def output_name_modifier(title_name):
     title_with_codec = title_name[:-10] + ".mp4"
@@ -72,7 +73,7 @@ def clean_up(audio_source, subtitle_source): #delete used tts audio and subtitle
             print("File does not exist")
     return
 
-def video_split(film_source): 
+def video_split(film_source, output): 
     film = VideoFileClip(film_source) #Load the File
     duration = film.duration #Get duration in seconds
     coefficient = duration / 59 #Calculate into how many clips vid can be chopped
@@ -81,7 +82,7 @@ def video_split(film_source):
         end_time = start_time + 59
         n = film.subclip(start_time, end_time)
         n = n.volumex(0.4)
-        abra = "clip_"+ str(x) + ".mp4"
+        abra = output + "clip_" + str(x) + str(random.randint(0, 100)) + ".mp4"
         print(abra) #Nevermind this, it just looks better this way xD
         n.write_videofile(abra)
     return

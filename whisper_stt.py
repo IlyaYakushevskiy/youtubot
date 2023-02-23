@@ -25,7 +25,7 @@ def run(input_path: str, output_path: str) -> None:
         for i, segment in enumerate(result["segments"], start=1):
             # split lines longer than 33 characters into multiple lines
             text = segment['text'].strip().replace('-->', '->')
-            lines = [text[j:j+33] for j in range(0, len(text), 32)]
+            lines = [text[j:j+30] for j in range(0, len(text), 30)]
             text = '\n'.join(lines)
             # write srt lines
             print(
