@@ -55,6 +55,8 @@ def main(i):
     text = text.replace("/", "") #We somtimes get random // in output
     text = text.replace('"','') #And we get"
     text = text.replace("'", '') #' is also a possibility in a string. We don't want that
+    text = text.replace('\\', '') #I hate getting backslashes from openAI
+    
     if separator in text:
         title_name, rest_of_text = text.split(separator, 1)
         text = title_name + rest_of_text #making beautiful human readable text 
