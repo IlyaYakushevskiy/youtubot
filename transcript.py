@@ -5,7 +5,7 @@ with open('./prompts/Prompt_amiass.txt', 'r', encoding = "UTF-8") as f:
     prompt = f.read()
 
 
-openai.api_key = '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'
+
 
 def get_transript(topic):
 
